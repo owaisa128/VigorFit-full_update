@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORMA — Brand Identity & Mark Specification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark-bg: #0B0D0F;
+    --dark-surface: #15181B;
+    --dark-surface-raised: #1D2124;
+    --dark-border: #262B30;
+    --dark-text: #F4F5F6;
+    --dark-muted: #9AA3AB;
+
+    --light-bg: #F4F5F6;
+    --light-surface: #FFFFFF;
+    --light-surface-raised: #ECEFF1;
+    --light-border: #D8DDE1;
+    --light-text: #0B0D0F;
+    --light-muted: #5B646C;
+
+    --brand-ember: #FF6B47;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #08090A;
+    color: var(--dark-text);
+    font-family: var(--font-body);
+    padding: 40px 24px 80px;
+    line-height: 1.5;
+  }
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+  .header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--dark-border);
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--brand-ember);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .lead {
+    color: var(--dark-muted);
+    font-size: 1.05rem;
+    max-width: 760px;
+  }
+
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-desc {
+    color: var(--dark-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  /* Presentation showcases */
+  .hero-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .hero-card {
+    border-radius: 16px;
+    padding: 48px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card.dark {
+    background: var(--dark-bg);
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text);
+  }
+  .hero-card.light {
+    background: var(--light-surface);
+    border: 1px solid var(--light-border);
+    color: var(--light-text);
+  }
+  .badge {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 9999px;
+  }
+  .hero-card.dark .badge {
+    background: var(--dark-surface-raised);
+    color: var(--dark-muted);
+    border: 1px solid var(--dark-border);
+  }
+  .hero-card.light .badge {
+    background: var(--light-surface-raised);
+    color: var(--light-muted);
+    border: 1px solid var(--light-border);
+  }
+
+  /* Lockup styles */
+  .brand-lockup-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .brand-lockup-stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .wordmark.large { font-size: 2.75rem; }
+  .wordmark.medium { font-size: 1.85rem; }
+  .wordmark.small { font-size: 1.25rem; }
+
+  /* Mark anatomy dissection */
+  .anatomy-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .anatomy-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-bg);
+    border: 1px solid var(--dark-border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .anatomy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+  }
+  .anatomy-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .anatomy-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .dot-top { background: rgba(255,107,71,0.2); color: #FF6B47; border: 1px solid #FF6B47; }
+  .dot-mid { background: rgba(20,184,166,0.2); color: #14B8A6; border: 1px solid #14B8A6; }
+  .dot-bot { background: rgba(184,174,255,0.2); color: #B8AEFF; border: 1px solid #B8AEFF; }
+  .dot-stem { background: rgba(244,245,246,0.2); color: #F4F5F6; border: 1px solid #F4F5F6; }
+
+  .anatomy-text h4 {
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+  .anatomy-text p {
+    font-size: 0.85rem;
+    color: var(--dark-muted);
+  }
+
+  /* Grid alignment & legibility ladder */
+  .ladder-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .ladder-cell {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 10px;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .ladder-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 64px;
+  }
+  .ladder-info {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--dark-muted);
+  }
+  .ladder-info strong {
+    color: var(--dark-text);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* Anti-slop notice */
+  .callout-box {
+    background: rgba(255, 107, 71, 0.05);
+    border: 1px solid rgba(255, 107, 71, 0.25);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 32px;
+  }
+  .callout-box h3 {
+    color: var(--brand-ember);
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+  .callout-box p {
+    font-size: 0.88rem;
+    color: var(--dark-muted);
+  }
+
+  /* Code block */
+  .code-block {
+    background: #050607;
+    border: 1px solid var(--dark-border);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #CED5DC;
+    overflow-x: auto;
+    white-space: pre;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="kicker">Identity & Systems Design · Impeccable</div>
+    <h1>FORMA Brand Identity & Standalone Mark</h1>
+    <p class="lead">An abstract monogram engineered for extreme craft and clarity: three ascending horizontal bars anchoring a stylized "F", reading simultaneously as progress tracking, athlete mid-stride, and kinetic brand mark. One color only. No gradients. No barbells.</p>
+  </div>
+
+  <!-- Primary Showcase: Reversed & Single-Color Light -->
+  <div class="section">
+    <div class="section-title">Primary Lockups (Display Typeface & Standalone Mark)</div>
+    <div class="section-desc">Single flat fill. Zero gradients, zero drop shadows, zero glows. Designed to maintain commanding authority on both dark and light surfaces.</div>
+
+    <div class="hero-showcase">
+      <!-- Dark: Reversed (Light-on-Dark) -->
+      <div class="hero-card dark">
+        <span class="badge">Reversed (Light-on-Dark)</span>
+        <div class="brand-lockup-horizontal">
+          <div style="width: 52px; height: 52px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#F4F5F6" aria-label="FORMA Mark">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+          <span class="wordmark large">FORMA</span>
+        </div>
+        <div class="brand-lockup-stacked" style="opacity: 0.75; transform: scale(0.85);">
+          <div style="width: 36px; height: 36px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#F4F5F6">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+          <span class="wordmark small">FORMA</span>
+        </div>
+      </div>
+
+      <!-- Light: Single-Color-on-Light -->
+      <div class="hero-card light">
+        <span class="badge">Single-Color-on-Light</span>
+        <div class="brand-lockup-horizontal">
+          <div style="width: 52px; height: 52px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#0B0D0F" aria-label="FORMA Mark">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+          <span class="wordmark large" style="color: #0B0D0F;">FORMA</span>
+        </div>
+        <div class="brand-lockup-stacked" style="opacity: 0.75; transform: scale(0.85);">
+          <div style="width: 36px; height: 36px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#0B0D0F">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+          <span class="wordmark small" style="color: #0B0D0F;">FORMA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Geometric & Conceptual Anatomy -->
+  <div class="section">
+    <div class="section-title">The Tri-Semantics Anatomy</div>
+    <div class="section-desc">How three ascending bars simultaneously resolve into a tracking chart, the letter "F," and human athletic movement.</div>
+
+    <div class="anatomy-grid">
+      <div class="anatomy-visual">
+        <div style="width: 140px; height: 140px; position: relative;">
+          <!-- SVG with annotated colored segments to illustrate the 3 ascending bars -->
+          <svg viewBox="0 0 24 24" width="100%" height="100%">
+            <!-- Grid lines background -->
+            <line x1="3.5" y1="0" x2="3.5" y2="24" stroke="#262B30" stroke-width="0.5" stroke-dasharray="1 1"/>
+            <line x1="6.5" y1="0" x2="6.5" y2="24" stroke="#262B30" stroke-width="0.5" stroke-dasharray="1 1"/>
+            <line x1="10.2" y1="0" x2="10.2" y2="24" stroke="#262B30" stroke-width="0.5" stroke-dasharray="1 1"/>
+            <line x1="14.5" y1="0" x2="14.5" y2="24" stroke="#262B30" stroke-width="0.5" stroke-dasharray="1 1"/>
+            <line x1="20.5" y1="0" x2="20.5" y2="24" stroke="#262B30" stroke-width="0.5" stroke-dasharray="1 1"/>
+
+            <!-- Stem -->
+            <path d="M 3.5 3.5 L 6.5 3.5 L 6.5 20.5 L 3.5 20.5 Z" fill="#F4F5F6"/>
+            <!-- Bottom Bar (Bar 1) -->
+            <path d="M 6.5 17.3 L 10.2 17.3 L 10.2 20.5 L 6.5 20.5 Z" fill="#B8AEFF"/>
+            <!-- Middle Bar (Bar 2) -->
+            <path d="M 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 Z" fill="#14B8A6"/>
+            <!-- Top Bar with Upward Stroke (Bar 3) -->
+            <path d="M 6.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 Z" fill="#FF6B47"/>
+          </svg>
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--dark-muted); margin-top: 14px;">Color-coded structural decomposition</span>
+      </div>
+
+      <div class="anatomy-list">
+        <div class="anatomy-item">
+          <div class="anatomy-dot dot-top">3</div>
+          <div class="anatomy-text">
+            <h4>Top Bar + Upward Stroke (Peak Target / Forward Stride / Top Arm of "F")</h4>
+            <p>Spans 17 units before breaking upward into a dynamic 45° surge (20.5, 1.5). In data: represents breakthrough performance and goal attainment. In kinetics: the chest, lead arm, and forward gaze of an athlete surging through the finish line.</p>
+          </div>
+        </div>
+
+        <div class="anatomy-item">
+          <div class="anatomy-dot dot-mid">2</div>
+          <div class="anatomy-text">
+            <h4>Middle Bar (Consistent Progress / Mid-Flight Pelvis / Crossbar of "F")</h4>
+            <p>Spans 11 units. The intermediate progression milestone. In kinetics: the driving knee and core propulsion of a runner mid-stride. In typography: establishes the unmistakable Latin crossbar of the "F".</p>
+          </div>
+        </div>
+
+        <div class="anatomy-item">
+          <div class="anatomy-dot dot-bot">1</div>
+          <div class="anatomy-text">
+            <h4>Bottom Bar (Baseline / Ground Push-Off / Grounded Foundation)</h4>
+            <p>Spans 6.7 units. The foundational baseline measurement. In kinetics: the push-off foot and trailing drive launching forward from the ground. Its restrained length prevents confusion with an "E", keeping the optical silhouette locked as "F".</p>
+          </div>
+        </div>
+
+        <div class="anatomy-item">
+          <div class="anatomy-dot dot-stem">Y</div>
+          <div class="anatomy-text">
+            <h4>Vertical Left Stem (Data Origin / Spine & Core / Letter Stem)</h4>
+            <p>A crisp 3.0-unit spine uniting the three tiers. Acts as the zero-axis in data charting, the athlete's spine and center of gravity, and the primary vertical stroke of the wordmark's initial.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legibility Ladder: 512px down to 16px -->
+  <div class="section">
+    <div class="section-title">Optical Scale & Legibility Verification</div>
+    <div class="section-desc">Tested at native raster rendering targets. Negative space channels (3.2–3.8px on 24px grid) remain crisply open even at tiny 16px browser tab dimensions.</div>
+
+    <div class="ladder-grid">
+      <!-- 64px -->
+      <div class="ladder-cell">
+        <div class="ladder-preview">
+          <div style="width: 64px; height: 64px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#F4F5F6">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="ladder-info">
+          <strong>64 × 64 px</strong>
+          App Store / Settings
+        </div>
+      </div>
+
+      <!-- 48px -->
+      <div class="ladder-cell">
+        <div class="ladder-preview">
+          <div style="width: 48px; height: 48px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#F4F5F6">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="ladder-info">
+          <strong>48 × 48 px</strong>
+          Mobile Home Screen
+        </div>
+      </div>
+
+      <!-- 32px -->
+      <div class="ladder-cell">
+        <div class="ladder-preview">
+          <div style="width: 32px; height: 32px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#F4F5F6">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="ladder-info">
+          <strong>32 × 32 px</strong>
+          Retina Favicon
+        </div>
+      </div>
+
+      <!-- 24px (Key Requirement) -->
+      <div class="ladder-cell" style="border-color: var(--brand-ember); background: rgba(255,107,71,0.03);">
+        <div class="ladder-preview">
+          <div style="width: 24px; height: 24px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#F4F5F6">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="ladder-info">
+          <strong style="color: var(--brand-ember);">24 × 24 px</strong>
+          Standard App Icon / Nav
+        </div>
+      </div>
+
+      <!-- 16px -->
+      <div class="ladder-cell">
+        <div class="ladder-preview">
+          <div style="width: 16px; height: 16px;">
+            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#F4F5F6">
+              <path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="ladder-info">
+          <strong>16 × 16 px</strong>
+          Browser Tab Favicon
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rejection of Slop Patterns -->
+  <div class="callout-box">
+    <h3>Intentional Rejection of Category Slop Patterns</h3>
+    <p>This monogram intentionally avoids both ubiquitous pitfalls: <strong>1) The generic gradient-blob "AI startup" loop</strong> that signals ephemeral vaporware with zero athletic or mechanical credibility, and <strong>2) The literal dumbbell / barbell glyph</strong> found across 98% of template fitness trackers. Instead, FORMA commands the visual presence of elite performance tracking equipment — disciplined, athletic, and typographically permanent.</p>
+  </div>
+
+  <!-- Vector Asset Specs -->
+  <div class="section" style="margin-top: 40px;">
+    <div class="section-title">Production Asset Specifications</div>
+    <div class="section-desc">Single-path SVG implementation ready for embedding as an icon component, favicon, web manifest icon, or vector asset.</div>
+
+    <div class="code-block">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;
+  &lt;path d="M 3.5 20.5 L 3.5 3.5 L 16.5 3.5 L 20.5 1.5 L 19 6 L 16.5 6 L 6.5 6 L 6.5 10 L 14.5 10 L 14.5 13.2 L 6.5 13.2 L 6.5 17.3 L 10.2 17.3 L 10.2 20.5 Z"/&gt;
+&lt;/svg&gt;</div>
+  </div>
+</div>
+</body>
+</html>

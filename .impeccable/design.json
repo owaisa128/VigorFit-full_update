@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 2,
+  "title": "Kinetide — The Kinetic Signal Atlas",
+  "extensions": {
+    "colorMeta": {
+      "primary-light": { "role": "primary", "displayName": "Route Violet", "canonical": "#5147C8" },
+      "primary-dark": { "role": "primary", "displayName": "Lilac Signal", "canonical": "#B8AEFF" },
+      "background-light": { "role": "neutral", "displayName": "Atlas Paper", "canonical": "#F5F2F9" },
+      "surface-light": { "role": "neutral", "displayName": "White Chart", "canonical": "#FFFDFF" },
+      "background-dark": { "role": "neutral", "displayName": "Night Atlas", "canonical": "#171622" },
+      "surface-dark": { "role": "neutral", "displayName": "Raised Slate", "canonical": "#222130" },
+      "workout": { "role": "activity", "displayName": "Workout Umber", "canonical": "#8B4F38" },
+      "cardio": { "role": "activity", "displayName": "Cardio Cobalt", "canonical": "#355AB5" },
+      "nutrition": { "role": "activity", "displayName": "Nutrition Moss", "canonical": "#3D704F" },
+      "hydration": { "role": "activity", "displayName": "Hydration Teal", "canonical": "#216F81" },
+      "milestone": { "role": "activity", "displayName": "Milestone Brass", "canonical": "#765800" },
+      "workout-dark": { "role": "activity", "displayName": "Workout Umber Night", "canonical": "#E1A388" },
+      "cardio-dark": { "role": "activity", "displayName": "Cardio Cobalt Night", "canonical": "#A7B9FF" },
+      "nutrition-dark": { "role": "activity", "displayName": "Nutrition Moss Night", "canonical": "#A3D5A9" },
+      "hydration-dark": { "role": "activity", "displayName": "Hydration Teal Night", "canonical": "#91D4E1" },
+      "milestone-dark": { "role": "activity", "displayName": "Milestone Brass Night", "canonical": "#ECD17C" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Fraunces", "purpose": "Expressive page titles and brief editorial moments." },
+      "body": { "displayName": "DM Sans", "purpose": "Clear interface copy, forms, and navigation." },
+      "measure": { "displayName": "DM Mono", "purpose": "Tabular metrics, durations, and measured values." }
+    },
+    "spacing": [
+      { "name": "space-1", "value": "5px" },
+      { "name": "space-2", "value": "10px" },
+      { "name": "space-3", "value": "15px" },
+      { "name": "space-4", "value": "20px" },
+      { "name": "space-6", "value": "30px" },
+      { "name": "space-8", "value": "40px" },
+      { "name": "space-12", "value": "60px" },
+      { "name": "space-16", "value": "80px" }
+    ],
+    "shapes": [
+      { "name": "r-xs", "value": "2px" },
+      { "name": "r-sm", "value": "8px" },
+      { "name": "r-md", "value": "12px" },
+      { "name": "r-lg", "value": "22px" }
+    ],
+    "shadows": [
+      { "name": "shadow", "value": "0 3px 8px rgba(36, 35, 56, 0.08), 0 14px 32px rgba(72, 59, 117, 0.12)", "purpose": "Separate cards from the page without visual heaviness." },
+      { "name": "shadow-raised", "value": "0 8px 18px rgba(36, 35, 56, 0.1), 0 26px 56px rgba(72, 59, 117, 0.18)", "purpose": "Show menus, dialogs, and focused overlays above content." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.2, 0.8, 0.2, 1)", "purpose": "Direct, settling movement for controls and navigation." },
+      { "name": "duration-quick", "value": "140ms", "purpose": "Hover and pressed feedback." },
+      { "name": "duration-standard", "value": "220ms", "purpose": "Focus, selection, and state changes." },
+      { "name": "duration-reveal", "value": "360ms", "purpose": "Meaningful content arrival, disabled for reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action",
+      "kind": "button",
+      "refersTo": "vf-primary-action",
+      "description": "Single high-priority action; compact label, violet signal, clear keyboard focus.",
+      "html": "<button class=\"vf-primary-action\">Start session</button>",
+      "css": ".vf-primary-action { min-height: 44px; padding: 10px 15px; border: 1px solid var(--primary); border-radius: var(--r-md); background: var(--primary); color: var(--on-primary); font: 600 14px/1.35 var(--font-body); transition: transform var(--duration-quick) var(--ease-standard), background-color var(--duration-quick) var(--ease-standard); } .vf-primary-action:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Clearly labeled field with visible focus and validation states.",
+      "html": "<label>Daily target<input class=\"vf-input\" inputmode=\"numeric\" /></label>",
+      "css": ".vf-input { min-height: 44px; padding: 10px 15px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface); color: var(--text); font: 400 16px/1.5 var(--font-body); } .vf-input:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }"
+    },
+    {
+      "name": "Activity Badge",
+      "kind": "chip",
+      "refersTo": "vf-activity-chip",
+      "description": "Activity colors identify type and are always paired with a label or icon.",
+      "html": "<span class=\"vf-activity-chip\" style=\"--activity-color:var(--cardio)\"><svg aria-hidden=\"true\"></svg>Cardio</span>",
+      "css": ".vf-activity-chip { min-height: 44px; padding: 10px 15px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--activity-color) 14%, var(--surface)); color: var(--activity-color); }"
+    },
+    {
+      "name": "Metric Card",
+      "kind": "card",
+      "refersTo": "vf-card",
+      "description": "Label first, tabular value second, and compact context; avoid decorative charts.",
+      "html": "<section class=\"vf-card\"><span>Weekly activity</span><strong class=\"vf-metric-value\">4.5 h</strong></section>",
+      "css": ".vf-card { padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow); } .vf-metric-value { font: 600 40px/1.1 var(--font-measure); font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Locked Feature",
+      "kind": "state",
+      "refersTo": "Membership gate",
+      "description": "Explain what is locked, why, and the next step; never use color alone or a dead-end lock.",
+      "html": "<section aria-labelledby=\"locked-title\"><h2 id=\"locked-title\">Coach insights</h2><p>Included with Plus</p><a href=\"/memberships\">View plans</a></section>"
+    },
+    {
+      "name": "Coach Chat",
+      "kind": "message",
+      "refersTo": "AI chat",
+      "description": "Distinct speaker alignment, concise messages, readable timestamps, and explicit AI identity."
+    }
+  ]
+}

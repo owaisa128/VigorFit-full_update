@@ -1,0 +1,132 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { ArrowRight, Dumbbell, Sparkles, TrendingUp, Utensils } from 'lucide-react';
+
+const features = [
+  {
+    title: 'Workout Tracking',
+    description: 'Create routines, manage exercises, and track sets, reps, and weights.',
+    icon: Dumbbell,
+    image: '/images/workout_strength.png',
+    imageAlt: 'Athlete strength training in a gym',
+    to: '/workouts',
+  },
+  {
+    title: 'Nutrition Insights',
+    description: 'Track meals, calories, protein, carbohydrates, and healthy fats.',
+    icon: Utensils,
+    image: '/images/nutrition_banner.png',
+    imageAlt: 'Balanced meal with protein, vegetables, and healthy fats',
+    to: '/nutrition',
+  },
+  {
+    title: 'Progress Analytics',
+    description: 'Monitor body measurements, strength, and fitness progress over time.',
+    icon: TrendingUp,
+    image: '/assets/fittrack-hero-together.png',
+    imageAlt: 'Athletes training together and building fitness progress',
+    to: '/progress',
+  },
+];
+
+export default function Hero() {
+  const { user } = useAuth();
+
+  return (
+    <section className="relative isolate mx-auto max-w-7xl overflow-hidden px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+      <div aria-hidden="true" className="pointer-events-none absolute -left-40 top-10 h-96 w-96 rounded-full bg-[#E10600]/15 blur-[120px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-32 top-20 h-80 w-80 rounded-full bg-[#3210FF]/15 blur-[120px]" />
+
+      <div className="relative grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+        <div className="order-2 text-center lg:order-1 lg:text-left">
+          <div className="hero-enter inline-flex items-center gap-2 rounded-full border border-[#E10600]/30 bg-[#171819] px-3.5 py-1.5 text-xs font-semibold text-red-200 shadow-inner">
+            <Sparkles className="h-3.5 w-3.5 text-[#E10600]" aria-hidden="true" />
+            <span>YOUR TRAINING. YOUR PACE. YOUR PROGRESS.</span>
+          </div>
+
+          <p className="hero-enter mt-7 text-xs font-bold uppercase tracking-[0.22em] text-red-200 sm:text-sm" style={{ animationDelay: '100ms' }}>
+            TRAINING. NUTRITION. REAL PROGRESS.
+          </p>
+          <h1 className="hero-enter mt-3 text-4xl font-black uppercase leading-[1.04] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl" style={{ animationDelay: '180ms' }}>
+            BUILD YOUR
+            <span className="mt-1 block bg-gradient-to-r from-[#E10600] via-red-300 to-[#650000] bg-clip-text text-transparent">
+              STRONGER SELF.
+            </span>
+          </h1>
+          <p className="hero-enter mx-auto mt-6 max-w-xl text-base leading-relaxed text-[#C4C4CC] sm:text-lg lg:mx-0" style={{ animationDelay: '260ms' }}>
+            Plan focused workouts, fuel your training with nutrition tracking, and see your fitness progress in one place.
+          </p>
+
+          <div className="hero-enter mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start" style={{ animationDelay: '340ms' }}>
+            <Link
+              to={user ? '/workouts' : '/register'}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#E10600] to-[#650000] px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-[#E10600]/25 transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+            >
+              Get Started <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+            <Link
+              to="/workouts"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-[#171819] px-6 py-3 text-sm font-bold text-white transition-colors hover:border-[#3210FF]/70 hover:bg-[#3210FF]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3210FF]"
+            >
+              Explore Workouts
+            </Link>
+          </div>
+
+          <div className="hero-enter mt-8 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-medium text-gray-400 lg:justify-start" style={{ animationDelay: '420ms' }}>
+            <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#E10600]" />Personalized routines</span>
+            <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#3210FF]" />Progress that persists</span>
+          </div>
+        </div>
+
+        <div className="hero-enter order-1 mx-auto w-full max-w-[min(78vw,27rem)] lg:order-2 lg:max-w-[34rem]" style={{ animationDelay: '180ms' }}>
+          <div className="hero-float relative aspect-square">
+            <div aria-hidden="true" className="hero-ring absolute inset-0 rounded-full border border-[#3210FF]/80" />
+            <div aria-hidden="true" className="absolute inset-[4%] rounded-full border border-[#E10600]/30 shadow-[0_0_55px_rgba(225,6,0,0.2)]" />
+            <div className="absolute inset-[9%] overflow-hidden rounded-full border border-white/10 bg-[#171819] shadow-[0_0_80px_rgba(225,6,0,0.2)]">
+              <img
+                src="/images/gym_hero_banner.png"
+                alt="Athlete training in a modern gym"
+                onError={(event) => {
+                  if (event.currentTarget.dataset.fallback !== 'true') {
+                    event.currentTarget.dataset.fallback = 'true';
+                    event.currentTarget.src = '/assets/hero-workout.jpg';
+                  }
+                }}
+                className="h-full w-full object-cover object-center"
+              />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#080808]/70 via-transparent to-[#080808]/10" />
+            </div>
+            <div className="hero-float absolute bottom-[10%] left-0 rounded-2xl border border-white/10 bg-[#171819]/95 p-3 shadow-2xl backdrop-blur sm:p-4">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Built on consistency</p>
+              <p className="mt-1 flex items-center gap-2 text-sm font-extrabold text-white"><TrendingUp className="h-4 w-4 text-[#3210FF]" aria-hidden="true" />Every rep counts</p>
+            </div>
+            <div className="absolute right-0 top-[17%] flex h-12 w-12 items-center justify-center rounded-full border border-[#3210FF]/50 bg-[#171819] text-[#8B7CFF] shadow-[0_0_28px_rgba(50,16,255,0.35)] sm:h-14 sm:w-14">
+              <Dumbbell className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="features" className="relative mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-4 text-left sm:grid-cols-2 lg:mt-24 lg:grid-cols-3">
+        {features.map(({ title, description, icon: Icon, image, imageAlt, to }) => (
+          <Link
+            key={title}
+            to={to}
+            className="group flex min-h-[22rem] flex-col rounded-2xl border border-white/10 bg-[#171819] p-5 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-[#E10600]/50 hover:shadow-[0_12px_30px_rgba(225,6,0,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]"
+          >
+            <div className="mb-4 aspect-[16/9] overflow-hidden rounded-xl bg-[#080808]">
+              <img src={image} alt={imageAlt} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-[#E10600]/20 bg-[#E10600]/10 text-red-200 transition-colors group-hover:bg-[#E10600]/20 group-hover:text-white">
+              <Icon className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <h2 className="text-sm font-bold uppercase tracking-wide text-white">{title}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-[#B8B8C2]">{description}</p>
+            <ArrowRight className="mt-auto h-4 w-4 self-end text-[#E10600] opacity-70 transition-all group-hover:translate-x-1 group-hover:opacity-100" aria-hidden="true" />
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}

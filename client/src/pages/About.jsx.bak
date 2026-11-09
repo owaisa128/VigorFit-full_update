@@ -1,0 +1,282 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import {
+  ArrowRight,
+  Award,
+  CheckCircle2,
+  Dumbbell,
+  Flame,
+  HeartHandshake,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp,
+  Users,
+  Zap,
+} from 'lucide-react';
+
+const stats = [
+  { label: 'Workouts Logged', value: '25,000+', icon: Dumbbell },
+  { label: 'Active Athletes', value: '4,800+', icon: Users },
+  { label: 'Goal Success Rate', value: '98.4%', icon: TrendingUp },
+  { label: 'Certified Coaches', value: '35+', icon: ShieldCheck },
+];
+
+const pillars = [
+  {
+    title: 'Data-Driven Programming',
+    description:
+      'We eliminate guesswork from fitness. Every set, rep, weight progression, and macro split is tracked and analyzed to ensure measurable, consistent strength and body composition results.',
+    icon: TrendingUp,
+    bgImage: '/images/Data-Driven%20P.jpg',
+  },
+  {
+    title: 'Precision Nutrition & Macros',
+    description:
+      'Integrated with direct nutritional databases, VigorFit provides precise caloric breakdowns and macro distribution tailored specifically to your metabolic rate and body composition goals.',
+    icon: Flame,
+    bgImage: '/images/Precision%20Nutrition.jpg',
+  },
+  {
+    title: 'Expert & AI Coaching',
+    description:
+      'Gain continuous feedback through certified personal trainer reviews, live interactive Zoom workouts, and our intelligent AI coach available 24/7 to answer technique and nutritional questions.',
+    icon: Sparkles,
+    bgImage: '/images/Expert%20%26%20AI%20Coaching.webp',
+    accent: 'soft',
+  },
+  {
+    title: 'Visual & Metric Accountability',
+    description:
+      'Celebrate real milestones with encrypted private progress photo journals, 1RM strength curves, and comprehensive body measurement trackers that verify your hard work.',
+    icon: Award,
+    bgImage: '/images/Body%20Metri.png',
+  },
+];
+
+const COACH_PHOTOS = ['Marcus%20Vance.webp', 'Elena%20Rostova.png', 'Tariq%20Malik.jpg'];
+
+const coaches = [
+  {
+    name: 'Marcus Vance',
+    role: 'Head of Strength & Conditioning',
+    specialty: 'Powerlifting & Hypertrophy',
+    bio: 'CSCS certified with 10+ years coaching collegiate athletes and competitive powerlifters.',
+  },
+  {
+    name: 'Elena Rostova',
+    role: 'Lead Nutrition Specialist',
+    specialty: 'Sports Dietetics & Fat Loss',
+    bio: 'Registered sports dietitian dedicated to building sustainable, high-energy nutritional habits.',
+  },
+  {
+    name: 'Tariq Malik',
+    role: 'Functional & HIIT Director',
+    specialty: 'Athletic Agility & Zoom Classes',
+    bio: 'Former track athlete specializing in high-intensity cardiovascular conditioning and injury prevention.',
+  },
+];
+
+export default function About() {
+  const { user } = useAuth();
+  const { theme } = useTheme();
+
+  const isLightTheme = theme === 'light';
+
+  const getPillarCardStyle = (bgImage, accent = 'default') => {
+    if (!bgImage) return undefined;
+
+    const overlay = accent === 'dark'
+      ? 'linear-gradient(90deg, rgba(25, 17, 18, 0.78), rgba(53, 20, 23, 0.58), rgba(15, 15, 20, 0.7))'
+      : accent === 'soft'
+        ? 'linear-gradient(90deg, rgba(232, 209, 208, 0.72), rgba(218, 171, 166, 0.55), rgba(143, 146, 161, 0.45))'
+        : isLightTheme
+          ? 'linear-gradient(rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.72))'
+          : 'linear-gradient(rgba(10, 10, 14, 0.38), rgba(10, 10, 14, 0.68))';
+
+    return {
+      backgroundImage: `${overlay}, url(${bgImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundBlendMode: 'normal',
+      backgroundRepeat: 'no-repeat',
+    };
+  };
+
+  return (
+    <div className="min-h-screen bg-[#080808] text-white">
+      {/* Hero Section */}
+      <section className="relative isolate overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <img aria-hidden="true" alt="" src="/images/banners/gym.jpg" loading="lazy" decoding="async" className="vf-hero-photo pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover" />
+        <div aria-hidden="true" className="pointer-events-none absolute -left-40 top-0 h-96 w-96 rounded-full bg-[#E10600]/15 blur-[120px]" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-32 top-10 h-80 w-80 rounded-full bg-[#3210FF]/15 blur-[120px]" />
+        <div aria-hidden="true" className="about-hero-effects pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          <span className="about-hero-ring about-hero-ring-one" />
+          <span className="about-hero-ring about-hero-ring-two" />
+          <span className="about-hero-particle about-hero-particle-one" />
+          <span className="about-hero-particle about-hero-particle-two" />
+          <span className="about-hero-particle about-hero-particle-three" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#E10600]/30 bg-[#171819] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-red-200 shadow-inner">
+            <Sparkles className="h-3.5 w-3.5 text-[#E10600]" />
+            <span>The VigorFit Philosophy</span>
+          </div>
+
+          <h1 className="mt-6 text-4xl font-black uppercase tracking-tight sm:text-5xl md:text-6xl">
+            BUILT FOR PURPOSE. <br />
+            <span className="bg-gradient-to-r from-[#E10600] via-red-400 to-[#FCA5A5] bg-clip-text text-transparent">
+              POWERED BY DISCIPLINE.
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#C4C4CC] sm:text-lg">
+            VigorFit is a comprehensive fitness management platform engineered to connect disciplined workout tracking,
+            scientific nutrition principles, and active coach mentorship into one seamless experience.
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link
+              to={user ? '/dashboard' : '/register'}
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#E10600] to-[#650000] px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-[#E10600]/25 transition hover:opacity-90"
+            >
+              {user ? 'Go to Dashboard' : 'Start Your Journey'}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              to="/memberships"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-[#171819] px-6 py-3 text-sm font-bold text-white transition hover:border-[#E10600]/50 hover:bg-white/5"
+            >
+              Explore Memberships
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Counter Bar */}
+      <section className="about-stats-section mt-4 border-y border-[#E10600]/20 bg-[#F8DDE4] py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+            {stats.map(({ label, value, icon: Icon }) => (
+              <div key={label} className="text-center">
+                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10 text-red-400">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <p className="text-2xl font-black text-white sm:text-3xl">{value}</p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-gray-400">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Core Pillars */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-red-400">Why VigorFit</h2>
+          <p className="mt-2 text-3xl font-black uppercase text-white sm:text-4xl">Engineered for Lifelong Performance</p>
+        </div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {pillars.map(({ title, description, icon: Icon, bgImage, accent }) => {
+            const isSoftCard = accent === 'soft';
+
+            return (
+              <div
+                key={title}
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#121216]/80 p-6 shadow-md transition hover:-translate-y-1 hover:border-[#E10600]/40"
+                style={getPillarCardStyle(bgImage, accent)}
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(225,6,0,0.18),transparent_52%)]" />
+                <div className="relative z-10">
+                  <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl border ${isSoftCard ? 'border-[#d8827d]/40 bg-[#f5d7d5]/80 text-[#c33f3d]' : 'border-red-500/20 bg-red-500/10 text-red-400'}`}>
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className={`text-base font-bold ${isSoftCard ? 'text-[#201d1d]' : 'text-white'}`}>{title}</h3>
+                  <p className={`mt-2 text-xs leading-relaxed ${isSoftCard ? 'text-[#2a2a2a]' : 'text-gray-300'}`}>{description}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Leadership & Coaches */}
+      <section className="about-coaches-section border-t border-white/10 bg-[#0a0a0d] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-red-400">Coaching Staff</h2>
+            <p className="mt-2 text-3xl font-black uppercase text-white sm:text-4xl">Learn from Verified Masters</p>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-gray-400">
+              Our network includes certified personal trainers, sports nutritionists, and conditioning coaches dedicated
+              to your fitness journey.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {coaches.map(({ name, role, specialty, bio }, index) => (
+              <div key={name} className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#141418] shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+                <div className="relative h-52 overflow-hidden">
+                  <img
+                    src={`/images/${COACH_PHOTOS[index % COACH_PHOTOS.length]}`}
+                    alt={name}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#141418] via-[#141418]/80 to-transparent" />
+                  <div className="absolute bottom-4 left-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-tr from-[#E10600] to-[#650000] text-sm font-black text-white shadow-lg shadow-[#E10600]/25 ring-2 ring-[#141418]">
+                    {name
+                      .split(' ')
+                      .map((n) => n[0])
+                      .join('')}
+                  </div>
+                </div>
+
+                <div className="p-6 pt-4">
+                  <h3 className="mt-2 text-lg font-bold text-white">{name}</h3>
+                  <p className="text-xs font-semibold text-red-400">{role}</p>
+                  <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-gray-300">
+                    <Zap className="h-3 w-3 text-red-400" />
+                    <span>{specialty}</span>
+                  </div>
+                  <p className="mt-3 text-xs leading-relaxed text-gray-400">{bio}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action banner */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="about-cta-card relative overflow-hidden rounded-[28px] border border-[#E10600]/40 bg-gradient-to-r from-[#17181c] via-[#101014] to-[#1e0a0a] p-8 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.02)] sm:p-12">
+          <img
+            src="/images/Ready to T.png"
+            alt="Ready to transform your fitness"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(225,6,0,0.10),transparent_55%)]" />
+          <div className="relative z-10">
+            <h2 className="text-2xl font-black uppercase text-white sm:text-3xl md:text-4xl">
+              Ready to Transform Your Fitness?
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-gray-300">
+              Join thousands of dedicated athletes tracking routines, mastering nutrition, and building their strongest selves.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <Link
+                to={user ? '/workouts' : '/register'}
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#E10600] to-[#650000] px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-[#E10600]/25 transition hover:opacity-90"
+              >
+                Get Started Now <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

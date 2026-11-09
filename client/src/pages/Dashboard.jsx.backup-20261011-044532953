@@ -1,0 +1,285 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Dumbbell, Utensils, TrendingUp, Flame, Activity, Calendar, ArrowRight, Plus, Sparkles, Award, ShieldCheck, HeartPulse } from 'lucide-react';
+import api from '../api/axios';
+
+export default function Dashboard() {
+  const [userProfile, setUserProfile] = useState(null);
+  const [workouts, setWorkouts] = useState([]);
+  const [nutritionSummary, setNutritionSummary] = useState({ totalCalories: 0, totalProtein: 0, totalCarbs: 0, totalFat: 0 });
+  const [progressSummary, setProgressSummary] = useState({ currentWeight: 0, weightChange: 0, maxBench: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      setLoading(true);
+      try {
+        const today = new Date().toISOString().split('T')[0];
+        const [profileRes, workoutsRes, nutritionRes, progressRes] = await Promise.allSettled([
+          api.get('/auth/profile'),
+          api.get('/workouts'),
+          api.get(`/nutrition/daily-summary?date=${today}`),
+          api.get('/progress/summary'),
+        ]);
+
+        if (profileRes.status === 'fulfilled' && profileRes.value.data.success) {
+          setUserProfile(profileRes.value.data.user);
+        }
+        if (workoutsRes.status === 'fulfilled') {
+          // Adjust for API response format (array or object wrapper)
+          const wData = Array.isArray(workoutsRes.value.data)
+            ? workoutsRes.value.data
+            : workoutsRes.value.data?.workouts || workoutsRes.value.data?.data || [];
+          setWorkouts(wData);
+        }
+        if (nutritionRes.status === 'fulfilled' && nutritionRes.value.data.success) {
+          setNutritionSummary(nutritionRes.value.data.summary);
+        }
+        if (progressRes.status === 'fulfilled' && progressRes.value.data.success) {
+          setProgressSummary(progressRes.value.data.summary);
+        }
+      } catch (err) {
+        console.error('Error fetching dashboard data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  const userName = userProfile?.name || 'Athlete';
+  const userGoal = userProfile?.fitnessGoal || 'Overall Fitness';
+  const targetCalories = userProfile?.targetCalories || 2200;
+  const caloriePercent = Math.min(Math.round((nutritionSummary.totalCalories / targetCalories) * 100), 100);
+
+  return (
+    <div className="min-h-screen bg-[#050505] text-white py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto space-y-8">
+        
+        {/* Welcome Hero Banner */}
+        <div className="relative bg-gradient-to-r from-[#12121B] via-[#1A0A18] to-[#0F0F14] border border-[#FF009D]/30 p-6 sm:p-8 rounded-3xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+          <div className="absolute right-0 top-0 w-96 h-96 bg-[#FF009D]/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FF009D]/20 border border-[#FF009D]/40 rounded-full text-xs font-semibold text-[#F8B4D0]">
+                <Sparkles className="w-3.5 h-3.5 text-[#FF009D]" /> Goal: {userGoal}
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+                Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-pink-200 to-[#FF009D]">{userName}</span> 👋
+              </h1>
+              <p className="text-sm text-gray-400 max-w-xl">
+                Ready to crush your workout goals today? Track your workouts, monitor daily nutrition, and stay consistent.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                to="/workouts/create"
+                className="flex items-center gap-2 px-5 py-3 bg-[#FF009D] hover:bg-[#E0008A] text-white font-bold rounded-xl shadow-[0_0_20px_rgba(255,0,157,0.5)] transition-all transform hover:scale-105 text-sm"
+              >
+                <Plus className="w-5 h-5" /> Log Workout
+              </Link>
+              <Link
+                to="/nutrition"
+                className="flex items-center gap-2 px-4 py-3 bg-[#181824] hover:bg-white/10 text-gray-200 font-semibold rounded-xl border border-white/10 transition-all text-sm"
+              >
+                <Utensils className="w-4 h-4 text-[#FF009D]" /> Log Meal
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          {/* Workouts Logged */}
+          <div className="bg-[#0F0F14] border border-white/10 p-5 rounded-2xl flex items-center justify-between">
+            <div>
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Total Workouts</span>
+              <span className="text-3xl font-extrabold text-white">{workouts.length}</span>
+              <span className="text-[11px] text-gray-500 block mt-1">Sessions recorded</span>
+            </div>
+            <div className="p-3 bg-[#FF009D]/15 border border-[#FF009D]/30 rounded-2xl text-[#FF009D]">
+              <Dumbbell className="w-6 h-6" />
+            </div>
+          </div>
+
+          {/* Today's Calories */}
+          <div className="bg-[#0F0F14] border border-white/10 p-5 rounded-2xl flex items-center justify-between">
+            <div>
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Calories Today</span>
+              <span className="text-3xl font-extrabold text-emerald-400">{nutritionSummary.totalCalories}</span>
+              <span className="text-[11px] text-gray-500 block mt-1">/ {targetCalories} kcal goal</span>
+            </div>
+            <div className="p-3 bg-emerald-500/15 border border-emerald-500/30 rounded-2xl text-emerald-400">
+              <Flame className="w-6 h-6" />
+            </div>
+          </div>
+
+          {/* Current Weight */}
+          <div className="bg-[#0F0F14] border border-white/10 p-5 rounded-2xl flex items-center justify-between">
+            <div>
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Current Weight</span>
+              <span className="text-3xl font-extrabold text-amber-400">
+                {progressSummary.currentWeight ? `${progressSummary.currentWeight}kg` : '--'}
+              </span>
+              <span className="text-[11px] text-gray-500 block mt-1">
+                {progressSummary.weightChange ? `${progressSummary.weightChange}kg overall` : 'Start tracking'}
+              </span>
+            </div>
+            <div className="p-3 bg-amber-500/15 border border-amber-500/30 rounded-2xl text-amber-400">
+              <TrendingUp className="w-6 h-6" />
+            </div>
+          </div>
+
+          {/* AI Coach Status */}
+          <div className="bg-[#0F0F14] border border-white/10 p-5 rounded-2xl flex items-center justify-between">
+            <div>
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">AI Assistant</span>
+              <span className="text-xl font-extrabold text-pink-400 flex items-center gap-1.5 mt-1">
+                <ShieldCheck className="w-5 h-5 text-[#FF009D]" /> Active
+              </span>
+              <span className="text-[11px] text-gray-500 block mt-1">Ready for questions</span>
+            </div>
+            <div className="p-3 bg-pink-500/15 border border-pink-500/30 rounded-2xl text-[#FF009D]">
+              <HeartPulse className="w-6 h-6" />
+            </div>
+          </div>
+
+        </div>
+
+        {/* Dashboard Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* Recent Workouts List (2 Columns) */}
+          <div className="lg:col-span-2 bg-[#0F0F14] border border-white/10 p-6 rounded-2xl space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                <Dumbbell className="w-5 h-5 text-[#FF009D]" /> Recent Workouts
+              </h3>
+              <Link to="/workouts" className="text-xs text-[#FF009D] hover:underline flex items-center gap-1 font-semibold">
+                View All <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {loading ? (
+              <div className="py-12 text-center text-xs text-gray-400">Loading workouts...</div>
+            ) : workouts.length === 0 ? (
+              <div className="py-12 text-center space-y-3 bg-[#12121A] rounded-xl border border-white/5">
+                <Dumbbell className="w-10 h-10 text-gray-600 mx-auto" />
+                <p className="text-sm font-semibold text-gray-300">No Workouts Recorded Yet</p>
+                <p className="text-xs text-gray-500">Log your first exercise session to start tracking consistency!</p>
+                <Link
+                  to="/workouts/create"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#FF009D] text-white text-xs font-semibold rounded-xl"
+                >
+                  <Plus className="w-4 h-4" /> Create Workout
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {workouts.slice(0, 4).map((workout) => (
+                  <Link
+                    key={workout._id}
+                    to={`/workouts/${workout._id}`}
+                    className="flex items-center justify-between p-4 bg-[#181824] hover:bg-[#202030] border border-white/5 rounded-xl transition-all group"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="p-2.5 bg-[#FF009D]/10 text-[#FF009D] rounded-xl border border-[#FF009D]/20">
+                        <Activity className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white group-hover:text-[#FF009D] transition-colors">
+                          {workout.title}
+                        </h4>
+                        <div className="flex items-center gap-2 text-xs text-gray-400 mt-0.5">
+                          <span className="capitalize">{workout.category || 'General'}</span>
+                          <span>•</span>
+                          <span>{workout.exercises?.length || 0} exercises</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-gray-500 hidden sm:inline">
+                        {new Date(workout.createdAt).toLocaleDateString()}
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-[#FF009D] transition-colors" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Right Sidebar: Nutrition Breakdown & AI Quick Tips */}
+          <div className="space-y-6">
+            
+            {/* Today's Nutrition Widget */}
+            <div className="bg-[#0F0F14] border border-white/10 p-6 rounded-2xl space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <Utensils className="w-4 h-4 text-emerald-400" /> Today's Nutrition
+                </h3>
+                <Link to="/nutrition" className="text-xs text-emerald-400 hover:underline">Log</Link>
+              </div>
+
+              <div className="space-y-3 text-xs">
+                <div>
+                  <div className="flex justify-between text-gray-300 mb-1">
+                    <span>Calories</span>
+                    <span className="font-bold text-white">{nutritionSummary.totalCalories} / {targetCalories} kcal</span>
+                  </div>
+                  <div className="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                    <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${caloriePercent}%` }} />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/5 text-center">
+                  <div className="bg-[#181824] p-2 rounded-lg">
+                    <span className="text-[10px] text-gray-400 block">Protein</span>
+                    <span className="font-bold text-emerald-400">{nutritionSummary.totalProtein}g</span>
+                  </div>
+                  <div className="bg-[#181824] p-2 rounded-lg">
+                    <span className="text-[10px] text-gray-400 block">Carbs</span>
+                    <span className="font-bold text-amber-400">{nutritionSummary.totalCarbs}g</span>
+                  </div>
+                  <div className="bg-[#181824] p-2 rounded-lg">
+                    <span className="text-[10px] text-gray-400 block">Fat</span>
+                    <span className="font-bold text-purple-400">{nutritionSummary.totalFat}g</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Navigation Cards */}
+            <div className="bg-[#0F0F14] border border-[#FF009D]/20 p-5 rounded-2xl space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400">Quick Modules</h4>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  to="/progress"
+                  className="p-3 bg-[#181824] hover:bg-[#FF009D]/15 border border-white/10 hover:border-[#FF009D]/40 rounded-xl text-center text-xs font-semibold text-gray-200 transition-all"
+                >
+                  <TrendingUp className="w-4 h-4 text-[#FF009D] mx-auto mb-1" />
+                  <span>Progress Logs</span>
+                </Link>
+                <Link
+                  to="/profile"
+                  className="p-3 bg-[#181824] hover:bg-[#FF009D]/15 border border-white/10 hover:border-[#FF009D]/40 rounded-xl text-center text-xs font-semibold text-gray-200 transition-all"
+                >
+                  <Award className="w-4 h-4 text-[#FF009D] mx-auto mb-1" />
+                  <span>My Profile</span>
+                </Link>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+}
